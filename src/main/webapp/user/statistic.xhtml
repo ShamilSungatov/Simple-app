@@ -1,0 +1,56 @@
+<ui:composition template="/templates/commonTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="body">
+        <h:form>
+            <p:growl showDetail="true"/>
+            <p:commandButton value="#{msg['statistic.add']}" action="#{statisticController.save}" ajax="false"/>
+            <p:commandButton value="#{msg['statistic.cancel']}" action="#{mainController.refresh}" ajax="false"
+                             immediate="true"/>
+
+
+            <h:panelGrid columns="2">
+                <p:outputLabel for="name" value="#{msg['statistic.employeeName']}"/>
+                <h:outputText id="name" value="#{statisticController.employee.name}"/>
+
+                <p:outputLabel for="year" value="#{msg['statistic.employeeName']}"/>
+                <p:selectOneMenu id="year" value="#{statisticController.newPayment.year}">
+                    <f:selectItems value="#{statisticController.yearsList}"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel for="annualSalary" value="#{msg['statistic.annualSalary']}"/>
+                <p:inputText id="annualSalary" value="#{statisticController.newPayment.annualSalary}" validatorMessage="ggg"/>
+
+                <p:outputLabel for="annualBonus" value="#{msg['statistic.annualBonus']}"/>
+                <p:inputText id="annualBonus" value="#{statisticController.newPayment.annualBonus}"/>
+
+                <p:outputLabel for="annualSales" value="#{msg['statistic.annualSales']}"/>
+                <p:inputText id="annualSales" value="#{statisticController.newPayment.annualSales}"/>
+            </h:panelGrid>
+
+
+            <p:panel>
+                <p:dataTable value="#{statisticController.paymentsList}" var="payment">
+                    <p:column headerText="#{msg['statistic.dt.year']}">
+                        #{payment.year}
+                    </p:column>
+
+                    <p:column headerText="#{msg['statistic.dt.annualSalary']}">
+                        #{payment.annualSalary}
+                    </p:column>
+
+                    <p:column headerText="#{msg['statistic.dt.annualBonus']}">
+                        #{payment.annualBonus}
+                    </p:column>
+
+                    <p:column headerText="#{msg['statistic.dt.annualSales']}">
+                        #{payment.annualSales}
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

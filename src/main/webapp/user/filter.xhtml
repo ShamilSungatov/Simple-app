@@ -1,0 +1,102 @@
+<ui:composition
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+        <h:form id="form">
+
+            <p:panel>
+                <h:panelGrid columns="3">
+                    <p:selectBooleanCheckbox  value="#{filterController.paymentFilter.bonusActive}">
+                        <p:ajax update="bonus"/>
+                    </p:selectBooleanCheckbox>
+                    <p:outputLabel for="bonus" value="#{msg['filter.bonus']}"/>
+                    <h:panelGroup id="bonus">
+                        <p:inputText value="#{filterController.paymentFilter.bonusBegin}"
+                                     disabled="#{not filterController.paymentFilter.bonusActive}"/>
+                        -
+                        <p:inputText value="#{filterController.paymentFilter.bonusEnd}"
+                                     disabled="#{not filterController.paymentFilter.bonusActive}"/>
+                    </h:panelGroup>
+
+                    <p:selectBooleanCheckbox value="#{filterController.paymentFilter.salesActive}">
+                        <p:ajax  update="sales"/>
+                    </p:selectBooleanCheckbox>
+                    <p:outputLabel for="sales" value="#{msg['filter.sales']}"/>
+                    <h:panelGroup id="sales">
+                        <p:inputText value="#{filterController.paymentFilter.salesBegin}"
+                                     disabled="#{not filterController.paymentFilter.salesActive}"/>
+                        -
+                        <p:inputText value="#{filterController.paymentFilter.salesEnd}"
+                                     disabled="#{not filterController.paymentFilter.salesActive}"/>
+                    </h:panelGroup>
+
+                    <p:selectBooleanCheckbox value="#{filterController.paymentFilter.compenstationActive}">
+                        <p:ajax update="compenstation"/>
+                    </p:selectBooleanCheckbox>
+                    <p:outputLabel for="compenstation" value="#{msg['filter.compenstation']}"/>
+                    <h:panelGroup id="compenstation">
+                        <p:inputText value="#{filterController.paymentFilter.compenstationBegin}"
+                                     disabled="#{not filterController.paymentFilter.compenstationActive}"/>
+                        -
+                        <p:inputText value="#{filterController.paymentFilter.compenstationEnd}"
+                                     disabled="#{not filterController.paymentFilter.compenstationActive}"/>
+                    </h:panelGroup>
+
+                    <p:selectBooleanCheckbox value="#{filterController.paymentFilter.birthActive}">
+                        <p:ajax update="birth"/>
+                    </p:selectBooleanCheckbox>
+                    <p:outputLabel for="birth" value="#{msg['filter.birth']}"/>
+                    <h:panelGroup id="birth">
+                        <p:calendar value="#{filterController.paymentFilter.birthBegin}"
+                                    disabled="#{not filterController.paymentFilter.birthActive}"
+                                    pattern="dd.MM.yyyy" navigator="true"/>
+                        -
+                        <p:calendar value="#{filterController.paymentFilter.birthEnd}"
+                                    disabled="#{not filterController.paymentFilter.birthActive}"
+                                    pattern="dd.MM.yyyy" navigator="true"/>
+                    </h:panelGroup>
+                </h:panelGrid>
+
+                <p:commandButton value="#{msg['filter.do']}" update="dataTable" process="@form" action="#{filterController.useFilter()}"/>
+            </p:panel>
+
+            <p:dataTable id="dataTable" value="#{filterController.paymentsList}" var="payment"
+                     emptyMessage="#{msg['filter.dt.empty']}"
+                    paginator="true" paginatorAlwaysVisible="false" rows="15">
+                <p:column headerText="#{msg['filter.dt.year']}">
+                    #{payment.year}
+                </p:column>
+
+                <p:column headerText="#{msg['filter.dt.name']}">
+                    #{payment.employee.name}
+                </p:column>
+
+                <p:column headerText="#{msg['filter.dt.birth']}" >
+                    <h:outputText value="#{payment.employee.birth}">
+                        <f:convertDateTime pattern="dd.MM.yyyy"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="#{msg['filter.dt.annualSalary']}">
+                    #{payment.annualSalary}
+                </p:column>
+
+                <p:column headerText="#{msg['filter.dt.annualBonus']}">
+                    #{payment.annualBonus}
+                </p:column>
+
+                <p:column headerText="#{msg['filter.dt.annualCompensation']}">
+                    #{payment.annualSalary + payment.annualBonus}
+                </p:column>
+
+                <p:column headerText="#{msg['filter.dt.annualSales']}">
+                    #{payment.annualSales}
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+
+
+</ui:composition>

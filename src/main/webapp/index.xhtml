@@ -1,0 +1,21 @@
+<ui:composition template="/templates/commonTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="body">
+        <p:tabView dynamic="false" activeIndex="#{mainController.activeTab}">
+
+            <p:tab title="#{msg['index.employees']}">
+                <ui:include src="user/main.xhtml"/>
+            </p:tab>
+            <p:tab title="#{msg['index.filter']}"  id="filter">
+                <ui:include src="user/filter.xhtml"/>
+            </p:tab>
+        </p:tabView>
+
+
+    </ui:define>
+</ui:composition>

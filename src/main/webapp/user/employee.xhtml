@@ -1,0 +1,37 @@
+<ui:composition template="/templates/commonTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="body">
+        <h:form>
+
+            <p:growl showDetail="true"/>
+            <p:commandButton value="#{msg['employee.add']}" action="#{employeeController.save}" ajax="false"/>
+            <p:commandButton value="#{msg['employee.cancel']}" action="#{mainController.refresh}" ajax="false"
+                             immediate="true"/>
+
+            <p:separator/>
+
+            <h:panelGrid columns="2">
+
+                <p:outputLabel for="name" value="#{msg['employee.name']}"/>
+                <p:inputText id="name" value="#{employeeController.employee.name}" required="true"
+                             requiredMessage="#{msg['employee.name.required']}"/>
+
+                <p:outputLabel for="gender" value="#{msg['employee.gender']}"/>
+                <p:selectOneMenu id="gender" value="#{employeeController.employee.gender}">
+                    <f:selectItem itemValue="#{true}" itemLabel="#{msg['employee.gender.male']}"/>
+                    <f:selectItem itemValue="#{false}" itemLabel="#{msg['employee.gender.female']}"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel for="birth" value="#{msg['employee.birth']}"/>
+                <p:calendar id="birth" value="#{employeeController.employee.birth}"  pattern="dd.MM.yyyy"
+                            navigator="true" />
+            </h:panelGrid>
+        </h:form>
+
+
+    </ui:define>
+</ui:composition>

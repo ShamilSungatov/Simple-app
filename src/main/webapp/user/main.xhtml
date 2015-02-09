@@ -1,0 +1,45 @@
+<ui:composition
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+        <h:form id="filterForm">
+           <p:commandButton value="#{msg['main.add']}" action="#{employeeController.newEmployee}" ajax="false" />
+
+            <p:dataTable id="dataTable" value="#{mainController.employeeList}" var="employee"
+                     emptyMessage="#{msg['main.dt.empty']}"
+                    paginator="true" paginatorAlwaysVisible="false" rows="15">
+                <p:column headerText="#{msg['main.dt.name']}">
+                    <p:commandLink value="#{employee.name}" action="#{employeeController.editEmployee(employee)}" ajax="false"/>
+                </p:column>
+
+                <p:column headerText="#{msg['main.dt.birth']}">
+                    <h:outputText value="#{employee.birth}">
+                        <f:convertDateTime pattern="dd.MM.yyyy"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="#{msg['main.dt.gender']}">
+                    <h:outputText value="#{msg['main.dt.gender.male']}" rendered="#{employee.gender}"/>
+                    <h:outputText value="#{msg['main.dt.gender.female']}" rendered="#{not employee.gender}"/>
+                </p:column>
+
+
+                <p:column headerText="#{msg['main.dt.statistic']}">
+                    <p:commandButton value="$" title="#{msg['main.dt.statistic.button']}"
+                                     action="#{statisticController.editPayments(employee)}" ajax="false"/>
+                </p:column>
+
+                <p:column headerText="#{msg['main.dt.delete']}">
+                    <p:commandButton icon="ui-icon-close" title="#{msg['main.dt.delete']}"
+                                     onclick="return confirm('Are you sure?');"
+                                     action="#{mainController.delete(employee)}" ajax="false"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+
+
+</ui:composition>
